@@ -1,4 +1,4 @@
-package com.winstonmoon.wikibidetmap.ui.theme
+package com.winstonmoon.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
