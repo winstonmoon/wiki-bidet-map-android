@@ -14,3 +14,10 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Wiki Bidet Map"
 include ':app'
+include ':core:presentation'
+include ':core:domain'
+include ':core:data'
+include ':feature:welcome'
+include ':feature:map'
+include ':feature:settings'
+include ':feature:login'
