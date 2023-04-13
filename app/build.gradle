@@ -61,4 +61,12 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:presentation"))
+    implementation(project(":feature:login"))
+    implementation(project(":feature:map"))
+    implementation(project(":feature:settings"))
+    implementation(project(":feature:welcome"))
 }
