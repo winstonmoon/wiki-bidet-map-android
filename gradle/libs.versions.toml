@@ -24,6 +24,7 @@ date-time-picker = "1.0.2"
 message-bar-compose = "1.0.5"
 one-tap-compose = "1.0.0"
 desugar = "1.2.0"
+mapbox = "10.12.2"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx"}
@@ -60,3 +61,5 @@ time-dialog = { module = "com.maxkeppeler.sheets-compose-dialogs:clock", version
 message-bar-compose = { module = "com.github.stevdza-san:MessageBarCompose", version.ref = "message-bar-compose"}
 one-tap-compose = { module = "com.github.stevdza-san:OneTapCompose", version.ref = "one-tap-compose"}
 desugar-jdk = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar"}
+
+mapbox = { module = "com.mapbox.maps:android", version.ref = "mapbox"}
