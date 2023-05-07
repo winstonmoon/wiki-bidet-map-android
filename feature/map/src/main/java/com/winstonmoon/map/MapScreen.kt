@@ -115,7 +115,7 @@ private fun ModalNavigationDrawerMap(modifier: Modifier = Modifier) {
             painter = painterResource(id = R.drawable.baseline_map_24),
             contentDescription = "map icon"
         )
-        Text(text = "Map", fontSize = md.sys.typescale.label-large.size)
+        Text(text = "Map")
     }
 }
 
