@@ -1,6 +1,7 @@
 package com.winstonmoon.map
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.SearchBar
@@ -27,6 +29,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.viewinterop.AndroidView
+import com.mapbox.maps.MapView
+import com.mapbox.maps.ResourceOptionsManager
+import com.mapbox.maps.Style
+import com.mapbox.maps.dsl.cameraOptions
 import kotlinx.coroutines.launch
 
 @Composable
@@ -52,6 +59,7 @@ internal fun MapScreen(
     var active by rememberSaveable { mutableStateOf(false) }
     ModalNavigationDrawer(
         drawerState = drawerState,
+        gesturesEnabled = drawerState.isOpen,
         drawerContent = {
             ModalDrawerSheet {
                 ModalNavigationDrawerTitle()
@@ -61,12 +69,7 @@ internal fun MapScreen(
         },
         content = {
             Box {
-//            AndroidView(factory = )
-                Image(
-                    modifier = Modifier.fillMaxSize(),
-                    painter = painterResource(id = R.drawable.baseline_menu_40),
-                    contentDescription = ""
-                )
+                MapboxView()
                 SearchBar(
                     modifier = Modifier.align(Alignment.TopCenter),
                     query = text,
@@ -98,7 +101,36 @@ internal fun MapScreen(
 
                 }
             }
-        })
+        }
+    )
+}
+
+@Composable
+fun MapboxView(modifier: Modifier = Modifier) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize()
+    ) {
+        AndroidView(
+            modifier = Modifier,
+            factory = { context ->
+                ResourceOptionsManager.getDefault(
+                    context,
+                    context.getString(R.string.mapbox_access_token)
+                )
+
+                MapView(context).apply {
+                    getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
+                        cameraOptions {
+                            zoom(19.0)
+                        }
+                    }
+                }
+            }
+        )
+    }
 }
 
 @Composable
