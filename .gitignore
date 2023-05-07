@@ -43,3 +43,6 @@ _sandbox
 
 # Android Studio captures folder
 captures/
+
+# Mapbox
+app/src/main/res/values/developer-config.xml
