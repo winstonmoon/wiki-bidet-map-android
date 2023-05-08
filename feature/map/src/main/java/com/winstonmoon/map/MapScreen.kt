@@ -4,10 +4,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -15,6 +25,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
@@ -28,8 +40,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.constraintlayout.solver.state.helpers.AlignVerticallyReference
 import com.mapbox.maps.MapView
 import com.mapbox.maps.ResourceOptionsManager
 import com.mapbox.maps.Style
@@ -57,14 +72,54 @@ internal fun MapScreen(
     }
     var text by rememberSaveable { mutableStateOf("") }
     var active by rememberSaveable { mutableStateOf(false) }
+
+    val items = listOf(stringResource(id = R.string.map_title), stringResource(id = R.string.settings_title))
+    val selectedItem = remember { mutableStateOf(items[0]) }
     ModalNavigationDrawer(
         drawerState = drawerState,
         gesturesEnabled = drawerState.isOpen,
         drawerContent = {
             ModalDrawerSheet {
-                ModalNavigationDrawerTitle()
-                ModalNavigationDrawerMap()
-                ModalNavigationDrawerSettings()
+                WikiBidetMapLogo(
+                    modifier = Modifier.padding(horizontal = 28.dp, vertical = 24.dp)
+                )
+                NavigationDrawerItem(
+                    label = { Text(stringResource(id = R.string.map_title)) },
+                    icon = { Icon(Icons.Default.Map, null) },
+//                    selected = currentRoute == JetnewsDestinations.HOME_ROUTE,
+//                    onClick = { navigateToHome(); closeDrawer() },
+                    selected = stringResource(id = R.string.map_title) == selectedItem.value,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        selectedItem.value = "Map"
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
+                NavigationDrawerItem(
+                    label = { Text(stringResource(id = R.string.settings_title)) },
+                    icon = { Icon(Icons.Default.Settings, null) },
+//                    selected = currentRoute == JetnewsDestinations.HOME_ROUTE,
+//                    onClick = { navigateToHome(); closeDrawer() },
+                    selected = stringResource(id = R.string.settings_title) == selectedItem.value,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        selectedItem.value = "Settings"
+                              },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
+//                Spacer(Modifier.height(12.dp))
+//                items.forEach { item ->
+//                    NavigationDrawerItem(
+//                        icon = { Icon(item, contentDescription = null) },
+//                        label = { Text(item.name) },
+//                        selected = item == selectedItem.value,
+//                        onClick = {
+//                            scope.launch { drawerState.close() }
+//                            selectedItem.value = item
+//                        },
+//                        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+//                    )
+//                }
             }
         },
         content = {
@@ -124,7 +179,7 @@ fun MapboxView(modifier: Modifier = Modifier) {
                 MapView(context).apply {
                     getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS) {
                         cameraOptions {
-                            zoom(19.0)
+                            zoom(1000.0)
                         }
                     }
                 }
@@ -134,31 +189,69 @@ fun MapboxView(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun ModalNavigationDrawerTitle(modifier: Modifier = Modifier) {
-    Row() {
+private fun WikiBidetMapLogo(modifier: Modifier = Modifier) {
+    Row(modifier = modifier) {
+//        Icon(
+//            painterResource(R.drawable.baseline_map_24),
+//            contentDescription = null,
+//            tint = MaterialTheme.colorScheme.primary
+//        )
+        Spacer(Modifier.width(8.dp))
+//        Icon(
+//            painter = painterResource(R.drawable.ic_jetnews_wordmark),
+//            contentDescription = stringResource(R.string.app_name),
+//            tint = MaterialTheme.colorScheme.onSurfaceVariant
+//        )
         Text(text = "Wiki Bidet Map")
     }
 }
 
 @Composable
+private fun ModalNavigationDrawerTitle(modifier: Modifier = Modifier) {
+    Row(
+        modifier = Modifier.height(48.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            modifier = Modifier.padding(start = 4.dp),
+            text = "Wiki Bidet Map"
+        )
+    }
+}
+
+@Composable
 private fun ModalNavigationDrawerMap(modifier: Modifier = Modifier) {
-    Row() {
+    Row(
+        modifier = Modifier.height(48.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Image(
+            modifier = Modifier.padding(start = 4.dp),
             painter = painterResource(id = R.drawable.baseline_map_24),
             contentDescription = "map icon"
         )
-        Text(text = "Map")
+        Text(
+            modifier = Modifier.padding(start = 4.dp),
+            text = "Map"
+        )
     }
 }
 
 @Composable
 private fun ModalNavigationDrawerSettings(modifier: Modifier = Modifier) {
-    Row() {
+    Row(
+        modifier = Modifier.height(48.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Image(
+            modifier = Modifier.padding(start = 4.dp),
             painter = painterResource(id = R.drawable.baseline_settings_24),
             contentDescription = "settings icon"
         )
-        Text(text = "Settings")
+        Text(
+            modifier = Modifier.padding(start = 4.dp),
+            text = "Settings"
+        )
     }
 }
 
