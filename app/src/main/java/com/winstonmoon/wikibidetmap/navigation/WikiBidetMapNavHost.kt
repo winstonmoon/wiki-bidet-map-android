@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.winstonmoon.login.navigation.loginScreen
-import com.winstonmoon.map.navigation.mapScreen
-import com.winstonmoon.settings.navigation.settingsScreen
-import com.winstonmoon.welcome.navigation.welcomeScreen
+import com.winstonmoon.login.navigation.loginRoute
+import com.winstonmoon.map.navigation.mapRoute
+import com.winstonmoon.settings.navigation.settingsRoute
+import com.winstonmoon.welcome.navigation.welcomeRoute
 
 @Composable
 fun WikiBidetMapNavHost(
@@ -20,9 +20,11 @@ fun WikiBidetMapNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        loginScreen()
-        mapScreen()
-        settingsScreen()
-        welcomeScreen()
+        loginRoute()
+        mapRoute(
+            navigateToMap =
+        )
+        settingsRoute()
+        welcomeRoute()
     }
 }

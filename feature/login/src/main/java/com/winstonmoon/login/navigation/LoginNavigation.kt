@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.winstonmoon.login.LoginRoute
+import com.winstonmoon.login.LoginScreen
 
 const val loginNavigationRoute = "login_route"
 
@@ -12,8 +13,8 @@ fun NavController.navigateToLogin(navOptions: NavOptions? = null) {
     this.navigate(loginNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.loginScreen() {
+fun NavGraphBuilder.loginRoute() {
     composable(route = loginNavigationRoute) {
-        LoginRoute()
+        LoginScreen()
     }
 }

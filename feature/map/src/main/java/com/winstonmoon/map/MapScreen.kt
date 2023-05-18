@@ -51,19 +51,23 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.dsl.cameraOptions
 import kotlinx.coroutines.launch
 
-@Composable
-internal fun MapRoute(
-    modifier: Modifier = Modifier,
-) {
-    MapScreen(
-        modifier = modifier,
-    )
-}
+//@Composable
+//internal fun MapRoute(
+//    modifier: Modifier = Modifier,
+//    navigateToMap = ,
+//    navigateToSettings =
+//) {
+//    MapScreen(
+//        modifier = modifier
+//    )
+//}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MapScreen(
     modifier: Modifier = Modifier,
+    navigateToMap: () -> Unit,
+    navigateToSettings: () -> Unit
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -91,6 +95,7 @@ internal fun MapScreen(
                     selected = stringResource(id = R.string.map_title) == selectedItem.value,
                     onClick = {
                         scope.launch { drawerState.close() }
+                        navigateToMap
                         selectedItem.value = "Map"
                     },
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
@@ -103,6 +108,7 @@ internal fun MapScreen(
                     selected = stringResource(id = R.string.settings_title) == selectedItem.value,
                     onClick = {
                         scope.launch { drawerState.close() }
+                        navigateToSettings
                         selectedItem.value = "Settings"
                               },
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
@@ -206,75 +212,9 @@ private fun WikiBidetMapLogo(modifier: Modifier = Modifier) {
     }
 }
 
-@Composable
-private fun ModalNavigationDrawerTitle(modifier: Modifier = Modifier) {
-    Row(
-        modifier = Modifier.height(48.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            modifier = Modifier.padding(start = 4.dp),
-            text = "Wiki Bidet Map"
-        )
-    }
-}
-
-@Composable
-private fun ModalNavigationDrawerMap(modifier: Modifier = Modifier) {
-    Row(
-        modifier = Modifier.height(48.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            modifier = Modifier.padding(start = 4.dp),
-            painter = painterResource(id = R.drawable.baseline_map_24),
-            contentDescription = "map icon"
-        )
-        Text(
-            modifier = Modifier.padding(start = 4.dp),
-            text = "Map"
-        )
-    }
-}
-
-@Composable
-private fun ModalNavigationDrawerSettings(modifier: Modifier = Modifier) {
-    Row(
-        modifier = Modifier.height(48.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            modifier = Modifier.padding(start = 4.dp),
-            painter = painterResource(id = R.drawable.baseline_settings_24),
-            contentDescription = "settings icon"
-        )
-        Text(
-            modifier = Modifier.padding(start = 4.dp),
-            text = "Settings"
-        )
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewMapScreen() {
-    MapScreen()
-}
-
-@Preview
-@Composable
-fun PreviewModalNavigationDrawerTitle() {
-    ModalNavigationDrawerTitle()
-}
-
-@Preview
-@Composable
-fun PreviewModalNavigationDrawerMap() {
-    ModalNavigationDrawerMap()
-}
-
-@Preview
-@Composable
-fun PreviewModalNavigationDrawerSettings() {
-    ModalNavigationDrawerSettings()
+    MapScreen(navigateToMap = navigateToMap, )
 }
