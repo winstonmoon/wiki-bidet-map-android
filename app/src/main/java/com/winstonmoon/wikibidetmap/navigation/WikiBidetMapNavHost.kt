@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.winstonmoon.login.navigation.loginRoute
 import com.winstonmoon.map.navigation.mapRoute
+import com.winstonmoon.map.navigation.navigateToMap
+import com.winstonmoon.settings.navigation.navigateToSettings
 import com.winstonmoon.settings.navigation.settingsRoute
 import com.winstonmoon.welcome.navigation.welcomeRoute
 
@@ -22,7 +24,8 @@ fun WikiBidetMapNavHost(
     ) {
         loginRoute()
         mapRoute(
-            navigateToMap =
+            navigateToMap = { navController.navigateToMap() },
+            navigateToSettings = { navController.navigateToSettings() }
         )
         settingsRoute()
         welcomeRoute()
