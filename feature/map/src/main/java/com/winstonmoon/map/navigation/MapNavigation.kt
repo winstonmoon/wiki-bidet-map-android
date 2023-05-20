@@ -12,10 +12,14 @@ fun NavController.navigateToMap(navOptions: NavOptions? = null) {
     this.navigate(mapNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.mapRoute() {
+fun NavGraphBuilder.mapRoute(
+    navigateToMap: () -> Unit,
+    navigateToSettings: () -> Unit,
+) {
     composable(route = mapNavigationRoute) {
         MapScreen(
-            navigateToMap =
+            navigateToMap = navigateToMap,
+            navigateToSettings = navigateToSettings
         )
     }
 }
