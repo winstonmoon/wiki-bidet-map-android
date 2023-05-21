@@ -94,19 +94,6 @@ internal fun MapScreen(
                               },
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
-//                Spacer(Modifier.height(12.dp))
-//                items.forEach { item ->
-//                    NavigationDrawerItem(
-//                        icon = { Icon(item, contentDescription = null) },
-//                        label = { Text(item.name) },
-//                        selected = item == selectedItem.value,
-//                        onClick = {
-//                            scope.launch { drawerState.close() }
-//                            selectedItem.value = item
-//                        },
-//                        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-//                    )
-//                }
             }
         },
         content = {
@@ -193,8 +180,8 @@ private fun WikiBidetMapLogo(modifier: Modifier = Modifier) {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewMapScreen() {
-//    MapScreen()
-//}
+@Preview(showBackground = true)
+@Composable
+fun PreviewMapScreen() {
+    MapScreen(modifier = Modifier, navigateToMap = { }, navigateToSettings = { })
+}

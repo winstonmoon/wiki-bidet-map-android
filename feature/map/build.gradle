@@ -63,4 +63,8 @@ dependencies {
     implementation libs.navigation.compose
 
     implementation libs.mapbox
+
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:presentation"))
 }

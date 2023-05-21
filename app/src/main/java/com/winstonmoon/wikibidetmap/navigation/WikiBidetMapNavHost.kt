@@ -24,8 +24,14 @@ fun WikiBidetMapNavHost(
     ) {
         loginRoute()
         mapRoute(
-            navigateToMap = { navController.navigateToMap() },
-            navigateToSettings = { navController.navigateToSettings() }
+            navigateToMap = {
+                navController.popBackStack()
+                navController.navigateToMap()
+            },
+            navigateToSettings = {
+                navController.popBackStack()
+                navController.navigateToSettings()
+            }
         )
         settingsRoute()
         welcomeRoute()
