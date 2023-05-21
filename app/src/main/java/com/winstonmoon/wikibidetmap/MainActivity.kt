@@ -19,6 +19,7 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     //TODO
                     startDestination = "map_route"
+//                    startDestination = "settings_route"
                 )
             }
         }
