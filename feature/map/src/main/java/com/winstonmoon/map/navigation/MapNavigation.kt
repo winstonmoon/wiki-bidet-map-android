@@ -14,7 +14,7 @@ fun NavController.navigateToMap(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.mapRoute(
     navigateToMap: () -> Unit,
-    navigateToSettings: () -> Unit,
+    navigateToSettings: () -> Unit
 ) {
     composable(route = mapNavigationRoute) {
         MapScreen(

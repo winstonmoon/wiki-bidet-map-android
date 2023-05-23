@@ -74,11 +74,11 @@ internal fun MapScreen(
 //                    selected = currentRoute == JetnewsDestinations.HOME_ROUTE,
 //                    onClick = { navigateToHome(); closeDrawer() },
                     selected = stringResource(id = R.string.map_title) == selectedItem.value,
-                    onClick = {
-                        scope.launch { drawerState.close() }
+                    onClick =
+//                        scope.launch { drawerState.close() }
                         navigateToMap
-                        selectedItem.value = "Map"
-                    },
+//                        selectedItem.value = "Map"
+                    ,
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
                 NavigationDrawerItem(
@@ -87,11 +87,11 @@ internal fun MapScreen(
 //                    selected = currentRoute == JetnewsDestinations.HOME_ROUTE,
 //                    onClick = { navigateToHome(); closeDrawer() },
                     selected = stringResource(id = R.string.settings_title) == selectedItem.value,
-                    onClick = {
-                        scope.launch { drawerState.close() }
+                    onClick =
+//                        scope.launch { drawerState.close() }
                         navigateToSettings
-                        selectedItem.value = "Settings"
-                              },
+//                        selectedItem.value = "Settings"
+                              ,
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
             }
