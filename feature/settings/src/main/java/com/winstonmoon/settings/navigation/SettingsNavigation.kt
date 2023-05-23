@@ -12,8 +12,12 @@ fun NavController.navigateToSettings(navOptions: NavOptions? = null) {
     this.navigate(settingsNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.settingsRoute() {
+fun NavGraphBuilder.settingsRoute(
+    back: () -> Unit
+) {
     composable(route = settingsNavigationRoute) {
-        SettingsScreen()
+        SettingsScreen(
+            back = back
+        )
     }
 }
