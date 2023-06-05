@@ -43,3 +43,10 @@ graph TD;
     feature-settings-->core-data;
     core-data-->core-domain;
 ```
+
+
+
+
+
+
+
