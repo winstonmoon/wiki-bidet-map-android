@@ -71,27 +71,19 @@ internal fun MapScreen(
                 NavigationDrawerItem(
                     label = { Text(stringResource(id = R.string.map_title)) },
                     icon = { Icon(Icons.Default.Map, null) },
-//                    selected = currentRoute == JetnewsDestinations.HOME_ROUTE,
-//                    onClick = { navigateToHome(); closeDrawer() },
                     selected = stringResource(id = R.string.map_title) == selectedItem.value,
-                    onClick =
+                    onClick = navigateToMap,
 //                        scope.launch { drawerState.close() }
-                        navigateToMap
 //                        selectedItem.value = "Map"
-                    ,
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
                 NavigationDrawerItem(
                     label = { Text(stringResource(id = R.string.settings_title)) },
                     icon = { Icon(Icons.Default.Settings, null) },
-//                    selected = currentRoute == JetnewsDestinations.HOME_ROUTE,
-//                    onClick = { navigateToHome(); closeDrawer() },
                     selected = stringResource(id = R.string.settings_title) == selectedItem.value,
-                    onClick =
+                    onClick = navigateToSettings,
 //                        scope.launch { drawerState.close() }
-                        navigateToSettings
 //                        selectedItem.value = "Settings"
-                              ,
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
             }
