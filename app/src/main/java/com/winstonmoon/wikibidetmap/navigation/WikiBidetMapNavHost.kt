@@ -25,6 +25,7 @@ fun WikiBidetMapNavHost(
         loginRoute()
         mapRoute(
             navigateToMap = {
+                navController.popBackStack()
                 navController.navigateToMap()
             },
             navigateToSettings = {
