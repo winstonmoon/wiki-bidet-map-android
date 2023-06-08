@@ -5,8 +5,10 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -15,13 +17,18 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
@@ -34,6 +41,7 @@ internal fun SettingsScreen(
     modifier: Modifier = Modifier,
     back: () -> Unit
 ) {
+    var state by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -72,7 +80,7 @@ internal fun SettingsScreen(
             ) {
                 val context = LocalContext.current
                 SettingsClickableText(context, "Language") {
-
+                    state = true
                 }
 //                ClickableText(
 //                    modifier = Modifier
@@ -100,6 +108,9 @@ internal fun SettingsScreen(
             }
         }
     )
+    if (state) {
+        LanguageAlertDialog()
+    }
 }
 @Composable
 internal fun SettingsClickableText(context: Context, text: String, onClick: (Int) -> Unit) {
@@ -109,7 +120,7 @@ internal fun SettingsClickableText(context: Context, text: String, onClick: (Int
             .padding(horizontal = 16.dp),
         text = AnnotatedString(text),
         style = MaterialTheme.typography.bodyLarge,
-        onClick = onClick
+        onClick = {  }
     )
 //    TextButton(modifier = Modifier
 //        .fillMaxWidth()
@@ -119,61 +130,66 @@ internal fun SettingsClickableText(context: Context, text: String, onClick: (Int
 //    }
 }
 
-val openDialog = remember { mutableStateOf(true) }
-
-if (openDialog.value) {
+@Composable
+internal fun LanguageAlertDialog() {
     AlertDialog(
         onDismissRequest = {
-            state.value = false
+
         },
-        title = title?.let {
-            {
-                Column(
-                    Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(5.dp)
-                ) {
-                    Text(text = title)
+        title = {
+            Column(
+                Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(5.dp)
+            ) {
+                Text(text = "Language")
+            }
+                },
+        text = {
+            val radioOptions = listOf(
+                "Follow system",
+                "English",
+                "Korean",
+                "Japanese",
+                "Chinese")
+            val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[2]) }
+            Column(
+                Modifier.fillMaxWidth()
+            ) {
+                radioOptions.forEach { text ->
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .selectable(
+                                selected = (text == selectedOption),
+                                onClick = {
+                                    onOptionSelected(text)
+                                }
+                            )
+                            .padding(vertical = 5.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = (text == selectedOption),
+                            onClick = { onOptionSelected(text) }
+                        )
+                        Text(
+                            text = text
+                        )
+                    }
                 }
             }
         },
-        text = content,
         confirmButton = {
-            TextButton(onClick = { state.value = false }) {
+            TextButton(onClick = {  }) {
                 Text("cancel")
             }
         }, modifier = Modifier.padding(vertical = 5.dp)
-    ) {
-        val radioOptions = listOf(
-            stringResource(id = R.string.straight),
-            stringResource(id = R.string.curly),
-            stringResource(id = R.string.wavy))
-        val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[2]) }
-        Column(
-            Modifier.fillMaxWidth()
-        ) {
-            radioOptions.forEach { text ->
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .selectable(
-                            selected = (text == selectedOption),
-                            onClick = {
-                                onOptionSelected(text)
-                            }
-                        )
-                        .padding(vertical = 5.dp)
-                ) {
-                    RadioButton(
-                        selected = (text == selectedOption),
-                        onClick = { onOptionSelected(text) }
-                    )
-                    Text(
-                        text = text
-                    )
-                }
-            }
-        }
-    }
+    )
+}
+
+@Composable
+internal fun DarkModeAlertDialog() {
+
 }
 
 @Preview(showBackground = true)
