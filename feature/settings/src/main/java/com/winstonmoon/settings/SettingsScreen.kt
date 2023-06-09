@@ -1,15 +1,12 @@
 package com.winstonmoon.settings
 
-import android.app.Dialog
-import android.content.Context
-import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
@@ -23,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +27,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -79,7 +74,7 @@ internal fun SettingsScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 val context = LocalContext.current
-                SettingsClickableText(context, "Language") {
+                SettingsText( "Language") {
                     state = true
                 }
 //                ClickableText(
@@ -92,7 +87,7 @@ internal fun SettingsScreen(
 //                        Toast.makeText(context, "Language", Toast.LENGTH_SHORT).show()
 //                    }
 //                )
-                SettingsClickableText(context, "Dark Mode") {
+                SettingsText( "Dark Mode") {
 
                 }
 //                ClickableText(
@@ -113,21 +108,23 @@ internal fun SettingsScreen(
     }
 }
 @Composable
-internal fun SettingsClickableText(context: Context, text: String, onClick: (Int) -> Unit) {
-    ClickableText(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        text = AnnotatedString(text),
-        style = MaterialTheme.typography.bodyLarge,
-        onClick = {  }
-    )
-//    TextButton(modifier = Modifier
-//        .fillMaxWidth()
-//        .padding(horizontal = 16.dp),
-//        onClick = { Toast.makeText(context, text, Toast.LENGTH_SHORT).show() }) {
-//        Text(text = text,style = MaterialTheme.typography.bodyLarge)
-//    }
+internal fun SettingsText(text: String, onClick: (Int) -> Unit) {
+//    ClickableText(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(horizontal = 16.dp),
+//        text = AnnotatedString(text),
+//        style = MaterialTheme.typography.bodyLarge,
+//        onClick = {  }
+//    )
+    Text(modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 16.dp)
+        .clickable {
+            onClick
+        },
+        text = text,style = MaterialTheme.typography.bodyLarge)
+
 }
 
 @Composable
