@@ -108,7 +108,7 @@ internal fun SettingsScreen(
     }
 }
 @Composable
-internal fun SettingsText(text: String, onClick: (Int) -> Unit) {
+internal fun SettingsText(text: String, onClick: () -> Unit) {
 //    ClickableText(
 //        modifier = Modifier
 //            .fillMaxWidth()
@@ -121,7 +121,7 @@ internal fun SettingsText(text: String, onClick: (Int) -> Unit) {
         .fillMaxWidth()
         .padding(horizontal = 16.dp)
         .clickable {
-            onClick
+            onClick()
         },
         text = text,style = MaterialTheme.typography.bodyLarge)
 
