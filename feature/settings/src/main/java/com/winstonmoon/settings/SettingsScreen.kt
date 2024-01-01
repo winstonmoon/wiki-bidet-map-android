@@ -104,7 +104,7 @@ internal fun SettingsScreen(
         }
     )
     if (state) {
-        LanguageAlertDialog()
+        LanguageAlertDialog(state)
     }
 }
 @Composable
@@ -129,59 +129,62 @@ internal fun SettingsText(text: String, onClick: () -> Unit) {
 
 @Composable
 internal fun LanguageAlertDialog() {
-    AlertDialog(
-        onDismissRequest = {
-
-        },
-        title = {
-            Column(
-                Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(5.dp)
-            ) {
-                Text(text = "Language")
-            }
-                },
-        text = {
-            val radioOptions = listOf(
-                "Follow system",
-                "English",
-                "Korean",
-                "Japanese",
-                "Chinese")
-            val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[2]) }
-            Column(
-                Modifier.fillMaxWidth()
-            ) {
-                radioOptions.forEach { text ->
-                    Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .selectable(
+    if (state.value) {
+        AlertDialog(
+            onDismissRequest = {
+                state.value = false
+            },
+            title = {
+                Column(
+                    Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(5.dp)
+                ) {
+                    Text(text = "Language")
+                }
+            },
+            text = {
+                val radioOptions = listOf(
+                    "Follow system",
+                    "English",
+                    "Korean",
+                    "Japanese",
+                    "Chinese")
+                val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[2]) }
+                Column(
+                    Modifier.fillMaxWidth()
+                ) {
+                    radioOptions.forEach { text ->
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .selectable(
+                                    selected = (text == selectedOption),
+                                    onClick = {
+                                        onOptionSelected(text)
+                                    }
+                                )
+                                .padding(vertical = 5.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
                                 selected = (text == selectedOption),
-                                onClick = {
-                                    onOptionSelected(text)
-                                }
+                                onClick = { onOptionSelected(text) }
                             )
-                            .padding(vertical = 5.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        RadioButton(
-                            selected = (text == selectedOption),
-                            onClick = { onOptionSelected(text) }
-                        )
-                        Text(
-                            text = text
-                        )
+                            Text(
+                                text = text
+                            )
+                        }
                     }
                 }
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = {  }) {
-                Text("cancel")
-            }
-        }, modifier = Modifier.padding(vertical = 5.dp)
-    )
+            },
+            confirmButton = {
+                TextButton(onClick = {  }) {
+                    Text("cancel")
+                }
+            }, modifier = Modifier.padding(vertical = 5.dp)
+        )
+    }
+
 }
 
 @Composable
