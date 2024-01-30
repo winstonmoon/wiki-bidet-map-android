@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,7 +37,9 @@ internal fun SettingsScreen(
     modifier: Modifier = Modifier,
     back: () -> Unit
 ) {
-    var state by remember { mutableStateOf(false) }
+    var showLanguageSettingsDialog by remember { mutableStateOf(false) }
+    var showDarkModeSettingsDialog by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -75,48 +78,30 @@ internal fun SettingsScreen(
             ) {
                 val context = LocalContext.current
                 SettingsText( "Language") {
-                    state = true
+                    showLanguageSettingsDialog = true
                 }
-//                ClickableText(
-//                    modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(horizontal = 16.dp),
-//                    text = AnnotatedString("Language"),
-//                    style = MaterialTheme.typography.bodyLarge,
-//                    onClick = {
-//                        Toast.makeText(context, "Language", Toast.LENGTH_SHORT).show()
-//                    }
-//                )
                 SettingsText( "Dark Mode") {
-
+                    showDarkModeSettingsDialog = true
                 }
-//                ClickableText(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(horizontal = 16.dp),
-//                    text = AnnotatedString("Dark Mode"),
-//                    style = MaterialTheme.typography.bodyLarge,
-//                    onClick = {
-//                        Toast.makeText(context, "Dark Mode", Toast.LENGTH_SHORT).show()
-//                    }
-//                )
             }
         }
     )
-    if (state) {
-        LanguageAlertDialog(state)
+    if (showLanguageSettingsDialog) {
+        LanguageSettingsDialog(
+            onDismiss = { showLanguageSettingsDialog = false },
+        )
+    }
+    if (showDarkModeSettingsDialog) {
+        DarkModeSettingsDialog(
+            onDismiss = { showDarkModeSettingsDialog = false },
+        )
     }
 }
 @Composable
-internal fun SettingsText(text: String, onClick: () -> Unit) {
-//    ClickableText(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(horizontal = 16.dp),
-//        text = AnnotatedString(text),
-//        style = MaterialTheme.typography.bodyLarge,
-//        onClick = {  }
-//    )
+internal fun SettingsText(
+    text: String,
+    onClick: () -> Unit
+) {
     Text(modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 16.dp)
@@ -124,16 +109,14 @@ internal fun SettingsText(text: String, onClick: () -> Unit) {
             onClick()
         },
         text = text,style = MaterialTheme.typography.bodyLarge)
-
 }
 
 @Composable
-internal fun LanguageAlertDialog() {
-    if (state.value) {
+internal fun LanguageSettingsDialog(
+    onDismiss: () -> Unit,
+) {
         AlertDialog(
-            onDismissRequest = {
-                state.value = false
-            },
+            onDismissRequest = { onDismiss() },
             title = {
                 Column(
                     Modifier.fillMaxWidth(),
@@ -149,7 +132,7 @@ internal fun LanguageAlertDialog() {
                     "Korean",
                     "Japanese",
                     "Chinese")
-                val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[2]) }
+                val (selectedOption, onOptionSelected) = rememberSaveable { mutableStateOf(radioOptions[0]) }
                 Column(
                     Modifier.fillMaxWidth()
                 ) {
@@ -178,18 +161,67 @@ internal fun LanguageAlertDialog() {
                 }
             },
             confirmButton = {
-                TextButton(onClick = {  }) {
+                TextButton(onClick = { onDismiss() }) {
                     Text("cancel")
                 }
             }, modifier = Modifier.padding(vertical = 5.dp)
         )
     }
 
-}
-
 @Composable
-internal fun DarkModeAlertDialog() {
-
+internal fun DarkModeSettingsDialog(
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        title = {
+            Column(
+                Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(5.dp)
+            ) {
+                Text(text = "Language")
+            }
+        },
+        text = {
+            val radioOptions = listOf(
+                "Follow system",
+                "Dark",
+                "Light",
+                )
+            val (selectedOption, onOptionSelected) = rememberSaveable { mutableStateOf(radioOptions[0]) }
+            Column(
+                Modifier.fillMaxWidth()
+            ) {
+                radioOptions.forEach { text ->
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .selectable(
+                                selected = (text == selectedOption),
+                                onClick = {
+                                    onOptionSelected(text)
+                                }
+                            )
+                            .padding(vertical = 5.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = (text == selectedOption),
+                            onClick = { onOptionSelected(text) }
+                        )
+                        Text(
+                            text = text
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { onDismiss() }) {
+                Text("cancel")
+            }
+        }, modifier = Modifier.padding(vertical = 5.dp)
+    )
 }
 
 @Preview(showBackground = true)

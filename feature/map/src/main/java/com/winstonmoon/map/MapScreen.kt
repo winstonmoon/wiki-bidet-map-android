@@ -60,6 +60,7 @@ internal fun MapScreen(
 
     val items = listOf(stringResource(id = R.string.map_title), stringResource(id = R.string.settings_title))
     val selectedItem = remember { mutableStateOf(items[0]) }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         gesturesEnabled = drawerState.isOpen,
