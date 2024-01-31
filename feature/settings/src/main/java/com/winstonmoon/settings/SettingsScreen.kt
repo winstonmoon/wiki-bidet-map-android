@@ -2,13 +2,17 @@ package com.winstonmoon.settings
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.Language
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -30,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.winstonmoon.presentation.theme.WikiBidetMapTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,15 +78,27 @@ internal fun SettingsScreen(
 //                }
 //            }
             Column(
-                modifier = Modifier.padding(innerPadding),
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .padding(start = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 val context = LocalContext.current
-                SettingsText( "Language") {
-                    showLanguageSettingsDialog = true
+                Row (
+                    modifier = Modifier.clickable {
+                        showLanguageSettingsDialog = true
+                    }
+                ) {
+                    Icon(imageVector = Icons.Filled.Language, contentDescription = null)
+                    SettingsText( "Language")
                 }
-                SettingsText( "Dark Mode") {
-                    showDarkModeSettingsDialog = true
+                Row (
+                    modifier = Modifier.clickable {
+                        showDarkModeSettingsDialog = true
+                    }
+                ) {
+                    Icon(imageVector = Icons.Filled.DarkMode, contentDescription = null)
+                    SettingsText( "Dark Mode")
                 }
             }
         }
@@ -98,16 +115,10 @@ internal fun SettingsScreen(
     }
 }
 @Composable
-internal fun SettingsText(
-    text: String,
-    onClick: () -> Unit
-) {
+internal fun SettingsText(text: String) {
     Text(modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 16.dp)
-        .clickable {
-            onClick()
-        },
+        .padding(horizontal = 16.dp),
         text = text,style = MaterialTheme.typography.bodyLarge)
 }
 
@@ -228,4 +239,34 @@ internal fun DarkModeSettingsDialog(
 @Composable
 fun PreviewMapScreen() {
     SettingsScreen(back = {})
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewLanguageSettingsDialog() {
+    WikiBidetMapTheme {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            LanguageSettingsDialog({})
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewDarkModeSettingsDialog() {
+    WikiBidetMapTheme {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            DarkModeSettingsDialog({})
+        }
+    }
 }
