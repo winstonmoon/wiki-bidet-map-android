@@ -7,7 +7,9 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
 import com.winstonmoon.presentation.theme.WikiBidetMapTheme
 import com.winstonmoon.wikibidetmap.navigation.WikiBidetMapNavHost
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
