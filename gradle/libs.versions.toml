@@ -28,7 +28,7 @@ mapbox = "10.12.2"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx"}
-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime"}
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose"}
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose"}
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose"}
@@ -64,3 +64,7 @@ one-tap-compose = { module = "com.github.stevdza-san:OneTapCompose", version.ref
 desugar-jdk = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar"}
 
 mapbox = { module = "com.mapbox.maps:android", version.ref = "mapbox"}
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
