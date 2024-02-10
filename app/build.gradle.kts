@@ -69,10 +69,8 @@ dependencies {
     debugImplementation(libs.ui.test.manifest)
 
 
-    implementation(libs.lifecycle.runtime)
-    implementation(libs.activity.compose)
 
-    implementation(libs.compose.ui)
+
     implementation(libs.compose.tooling.preview)
 
     implementation(libs.hilt.android)
