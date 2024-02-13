@@ -10,8 +10,8 @@ android {
 
     defaultConfig {
         applicationId = "com.winstonmoon.wikibidetmap"
-        minSdk 24
-        targetSdk 34
+        minSdk = 24
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -51,7 +51,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
@@ -67,27 +66,13 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-
-
-
-
-    implementation(libs.compose.tooling.preview)
-
     implementation(libs.hilt.android)
-    implementation(libs.material3.compose)
-    implementation(libs.navigation.compose)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ju) 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
 
-    implementation(project(":core:data"))
-    implementation(project(":core:domain"))
-    implementation(project(":core:presentation"))
-    implementation(project(":feature:login"))
-    implementation(project(":feature:map"))
-    implementation(project(":feature:settings"))
-    implementation(project(":feature:welcome"))
+    implementation(projects.core.data)
+    implementation(projects.core.domain)
+    implementation(projects.core.presentation)
+    implementation(projects.feature.login)
+    implementation(projects.feature.map)
+    implementation(projects.feature.settings)
+    implementation(projects.feature.welcome)
 }
